@@ -1,0 +1,132 @@
+{
+   "outbounds": [
+     {
+       "settings": {
+         "vnext": [
+           {
+             "port": 443,
+             "users": [
+               {
+                 "encryption": "none",
+                 "id": "5367e838-c200-489e-853b-3c3a8985deb",
+                 "level": 0,
+                 "alterId": 64,
+                 "security": "none"
+               }
+             ],
+             "address": "bukanvvip.my.id"
+           }
+         ]
+       },
+       "_flag_tag": "c6eb1895260c42b8ab0af7930df81de9",
+       "_flag_is_proxy": "0",
+       "streamSettings": {
+         "network": "ws",
+         "tlsSettings": {
+           "serverName": "support.deezer.com",
+           "allowInsecure": true
+         },
+         "wsSettings": {
+           "headers": {
+             "Host": "support.deezer.com"
+           },
+           "path": "\/bukanvvip"
+         },
+         "security": "tls"
+       },
+       "mux": {
+         "enabled": false,
+         "concurrency": 8
+       },
+       "protocol": "vmess",
+       "tag": "c6eb1895260c42b8ab0af7930df81de9"
+     },
+     {
+       "settings": {
+         "servers": [
+           {
+             "password": "123",
+             "port": 2082,
+             "address": "127.0.0.1"
+           }
+         ]
+       },
+       "_flag_tag": "b8bc4f038645439ba4f49043f04376ec",
+       "_flag_is_proxy": "0",
+       "streamSettings": {
+         "network": "tcp",
+         "security": "none"
+       },
+       "mux": {
+         "enabled": false,
+         "concurrency": 8
+       },
+       "protocol": "socks",
+       "tag": "b8bc4f038645439ba4f49043f04376ec"
+     },
+     {
+       "streamSettings": {
+         "sockopt": {
+           "mark": 255
+         }
+       },
+       "settings": {
+         "domainStrategy": "UseIPv4"
+       },
+       "protocol": "freedom",
+       "tag": "direct"
+     },
+     {
+       "protocol": "blackhole",
+       "tag": "blackhole"
+     },
+     {
+       "protocol": "dns",
+       "tag": "dns-out"
+     }
+   ],
+   "log": {
+     "loglevel": "warning"
+   },
+   "dns": {
+     "hosts": {
+       "cloudflare-dns.com": "1.1.1.1"
+     }
+   },
+   "routing": {
+     "domainStrategy": "AsIs",
+     "rules": [
+       {
+         "balancerTag": "balancer",
+         "type": "field",
+         "network": "tcp,udp"
+       }
+     ],
+     "balancers": [
+       {
+         "selector": [
+           "c6eb1895260c42b8ab0af7930df81de9",
+           "b8bc4f038645439ba4f49043f04376ec"
+         ],
+         "tag": "balancer"
+       }
+     ]
+   },
+   "inbounds": [
+     {
+       "sniffing": {
+         "enabled": true,
+         "destOverride": [
+           "http",
+           "tls"
+         ]
+       },
+       "port": 1041,
+       "protocol": "dokodemo-door",
+       "settings": {
+         "network": "tcp,udp",
+         "followRedirect": true
+       }
+     }
+   ]
+ }
